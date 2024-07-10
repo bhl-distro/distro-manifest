@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+    <!--
+    distro-head-scarthgap (5.0) is used as template for manifests that capture commit-id
+    repo init -u https://github.com/distro-core/distro-manifest.git -b main -m distro-head-scarthgap.xml -\-no-clone-bundle -\-no-repo-verify
+    repo sync
+    repo forall -c "git checkout -\-track \$REPO_REMOTE/\$REPO_RREV" || true
+    repo forall -c "git config -\-local user.name 'Firstname Surname'" || true
+    repo forall -c "git config -\-local user.email 'username@users.noreply.github.com'" || true
+    repo forall -c "git config -\-local user.signingkey '0000000000000000'" || true
+    -->
+
+    <!-- remotes reflect external github curated mirrors -->
+    <default sync-c="false" sync-s="true" sync-tags="false" />
+
+    <include name="remotes-github.xml" />
+    <include name="upstream-head-scarthgap.xml" />
+
+    <remote
+        name="remote-distro-core"
+        fetch="https://github.com/distro-core"
+        alias="origin"
+    />
+    <project
+        name="meta-distro"
+        path="layers/meta-distro"
+        remote="remote-distro-core"
+        revision="scarthgap"
+        upstream="scarthgap"
+        dest-branch="scarthgap"
+        groups="non-confidential,mirror,oss,distro-core,distro-full,base"
+        sync-c="false"
+        sync-s="false"
+        sync-tags="true"
+    >
+        <linkfile
+            src=".gitignore"
+            dest=".gitignore"
+        />
+        <linkfile
+            src="docs/README.distro.md"
+            dest="README.distro.md"
+        />
+        <linkfile
+            src="scripts"
+            dest="scripts"
+        />
+        <linkfile
+            src=".vscode"
+            dest=".vscode"
+        />
+    </project>
+
+</manifest>

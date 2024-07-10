@@ -1,0 +1,26 @@
+name: Scheduled Workflow Keepalive
+
+# An action to perform enablement on github actions
+# workflows. According to github, repository actions
+# can be suspended if the repository is inactive for
+# 60 days.
+
+# Requires
+# liskin/gh-workflow-keepalive@v1.2.1       Github Action
+
+# runs-on: [ self-hosted, linux ]
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 1 */2 * *'
+
+jobs:
+
+  job-execute:
+    runs-on: [ self-hosted, linux ]
+    permissions:
+      actions: write
+    steps:
+      - uses: liskin/gh-workflow-keepalive@v1.2.1
