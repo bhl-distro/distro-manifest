@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+head-scarthgap (5.0) is used as template for manifests that captures HEAD refs
+** LONG TERM SUPPORT 04/2028 **
+
+INITIALIZE
+
+mkdir -p /srv/repo/distro-core && cd /srv/repo/distro-core
+printf "\n\ny\n\n" | repo init -u https://github.com/distro-core/distro-manifest.git -b main -m head-scarthgap.xml -\-no-clone-bundle -\-groups default,min
+repo sync -\-force-sync -\-force-checkout -\-force-remove-dirty -\-no-repo-verify
+
+RECOMMENDED BEFORE OPENING IN IDE
+
+git -C .repo/manifests branch -D main
+git -C .repo/manifests checkout -\-track origin/main
+git -C .repo/manifests branch -D default
+
+repo -\-no-pager forall -c 'echo $REPO_PATH $REPO_RREV; git checkout -\-track $(git remote)/$REPO_RREV'
+repo -\-no-pager status | tee /dev/null
+
+FINALIZE
+
+repo manifest -\-revision-as-HEAD -\-output-file distro-refs-scarthgap.xml -\-pretty
+
+-->
+
+<manifest>
+
+    <!-- <remote
+        name="remote-meta-distro"
+        fetch="https://github.com/distro-core"
+        alias="origin"
+    />
+    <project
+        name="meta-distro"
+        path="layers/meta-distro"
+        remote="remote-meta-distro"
+        revision="main"
+        upstream="main"
+        groups="non-confidential,base"
+        sync-c="false" sync-s="false" sync-tags="true"
+    >
+        <linkfile
+            src=".gitignore"
+            dest=".gitignore"
+        />
+        <linkfile
+            src=".vscode"
+            dest=".vscode"
+        />
+        <copyfile
+            src="build/.keep"
+            dest="build/.keep"
+        />
+    </project> -->
+
+    <!-- upstream mirrors projects -->
+
+    <!-- <remote
+        name="remote-meta-amd"
+        fetch="https://github.com/distro-core-curated-mirrors"
+        alias="origin"
+    />
+    <project
+        name="meta-amd"
+        path="layers/meta-amd"
+        remote="remote-meta-amd"
+        revision="kirkstone"
+        upstream="kirkstone"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    /> -->
+
+    <remote
+        name="remote-meta-arm"
+        fetch="https://git.yoctoproject.org/meta-arm"
+        alias="origin"
+    />
+    <project
+        name="meta-arm"
+        path="layers/meta-arm"
+        remote="remote-meta-arm"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-clang"
+        fetch="https://github.com/kraj/meta-clang.git"
+        alias="origin"
+    />
+    <project
+        name="meta-clang"
+        path="layers/meta-clang"
+        remote="remote-meta-clang"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-dpdk"
+        fetch="https://git.yoctoproject.org/meta-dpdk"
+        alias="origin"
+    />
+    <project
+        name="meta-dpdk"
+        path="layers/meta-dpdk"
+        remote="remote-meta-dpdk"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-freescale"
+        fetch="https://github.com/Freescale/meta-freescale.git"
+        alias="origin"
+    />
+    <project
+        name="meta-freescale"
+        path="layers/meta-freescale"
+        remote="remote-meta-freescale"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-freescale-3rdparty"
+        fetch="https://github.com/Freescale/meta-freescale-3rdparty.git"
+        alias="origin"
+    />
+    <project
+        name="meta-freescale-3rdparty"
+        path="layers/meta-freescale-3rdparty"
+        remote="remote-meta-freescale-3rdparty"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-intel"
+        fetch="https://git.yoctoproject.org/meta-intel"
+        alias="origin"
+    />
+    <project
+        name="meta-intel"
+        path="layers/meta-intel"
+        remote="remote-meta-intel"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-yocto-meta-kde"
+        fetch="https://github.com/KDE/yocto-meta-kde.git"
+        alias="origin"
+    />
+    <project
+        name="yocto-meta-kde"
+        path="layers/meta-kde"
+        remote="remote-yocto-meta-kde"
+        revision="master"
+        upstream="master"
+        groups="notdefault,non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-yocto-meta-kf5"
+        fetch="https://github.com/KDE/yocto-meta-kf5.git"
+        alias="origin"
+    />
+    <project
+        name="yocto-meta-kf5"
+        path="layers/meta-kf5"
+        remote="remote-yocto-meta-kf5"
+        revision="master"
+        upstream="master"
+        groups="notdefault,non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-yocto-meta-kf6"
+        fetch="https://github.com/KDE/yocto-meta-kf6.git"
+        alias="origin"
+    />
+    <project
+        name="yocto-meta-kf6"
+        path="layers/meta-kf6"
+        remote="remote-yocto-meta-kf6"
+        revision="master"
+        upstream="master"
+        groups="notdefault,non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-mingw"
+        fetch="https://git.yoctoproject.org/meta-mingw"
+        alias="origin"
+    />
+    <project
+        name="meta-mingw"
+        path="layers/meta-mingw"
+        remote="remote-meta-mingw"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-openembedded"
+        fetch="https://git.openembedded.org/meta-openembedded"
+        alias="origin"
+    />
+    <project
+        name="meta-openembedded"
+        path="layers/meta-openembedded"
+        remote="remote-meta-openembedded"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base,min"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-openembedded-contrib"
+        fetch="https://git.openembedded.org/meta-openembedded-contrib"
+        alias="origin"
+    />
+    <project
+        name="meta-openembedded-contrib"
+        path="layers/meta-openembedded-contrib"
+        remote="remote-meta-openembedded-contrib"
+        revision="stable/scarthgap-nut"
+        upstream="stable/scarthgap-nut"
+        groups="notdefault,non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-qt5"
+        fetch="https://github.com/meta-qt5/meta-qt5.git"
+        alias="origin"
+    />
+    <project
+        name="meta-qt5"
+        path="layers/meta-qt5"
+        remote="remote-meta-qt5"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-qt6"
+        fetch="https://code.qt.io/yocto/meta-qt6.git"
+        alias="origin"
+    />
+    <project
+        name="meta-qt6"
+        path="layers/meta-qt6"
+        remote="remote-meta-qt6"
+        revision="lts-6.5"
+        upstream="lts-6.5"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-raspberrypi"
+        fetch="https://github.com/agherzan/meta-raspberrypi.git"
+        alias="origin"
+    />
+    <project
+        name="meta-raspberrypi"
+        path="layers/meta-raspberrypi"
+        remote="remote-meta-raspberrypi"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-riscv"
+        fetch="https://github.com/riscv/meta-riscv.git"
+        alias="origin"
+    />
+    <project
+        name="meta-riscv"
+        path="layers/meta-riscv"
+        remote="remote-meta-riscv"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="notdefault,non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-rust"
+        fetch="https://github.com/meta-rust/meta-rust.git"
+        alias="origin"
+    />
+    <project
+        name="meta-rust"
+        path="layers/meta-rust"
+        remote="remote-meta-rust"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-secure-core"
+        fetch="https://github.com/Wind-River/meta-secure-core.git"
+        alias="origin"
+    />
+    <project
+        name="meta-secure-core"
+        path="layers/meta-secure-core"
+        remote="remote-meta-secure-core"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-security"
+        fetch="https://git.yoctoproject.org/meta-security"
+        alias="origin"
+    />
+    <project
+        name="meta-security"
+        path="layers/meta-security"
+        remote="remote-meta-security"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-selinux"
+        fetch="https://git.yoctoproject.org/meta-selinux"
+        alias="origin"
+    />
+    <project
+        name="meta-selinux"
+        path="layers/meta-selinux"
+        remote="remote-meta-selinux"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-tegra"
+        fetch="https://github.com/OE4T/meta-tegra.git"
+        alias="origin"
+    />
+    <project
+        name="meta-tegra"
+        path="layers/meta-tegra"
+        remote="remote-meta-tegra"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,bsp"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-updater"
+        fetch="https://github.com/uptane/meta-updater.git"
+        alias="origin"
+    />
+    <project
+        name="meta-updater"
+        path="layers/meta-updater"
+        remote="remote-meta-updater"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base,min"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-meta-virtualization"
+        fetch="https://git.yoctoproject.org/meta-virtualization"
+        alias="origin"
+    />
+    <project
+        name="meta-virtualization"
+        path="layers/meta-virtualization"
+        remote="remote-meta-virtualization"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+    <remote
+        name="remote-poky"
+        fetch="https://git.yoctoproject.org/poky"
+        alias="origin"
+    />
+    <project
+        name="poky"
+        path="layers/poky"
+        remote="remote-poky"
+        revision="scarthgap"
+        upstream="scarthgap"
+        groups="non-confidential,base,min"
+        clone-depth="1" sync-c="true" sync-s="false" sync-tags="false"
+    />
+
+</manifest>
